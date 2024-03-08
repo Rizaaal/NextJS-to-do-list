@@ -2,20 +2,30 @@ import { Dispatch, ReactElement, SetStateAction, createContext, useEffect, useSt
 
 export const todoContext = createContext<ContextProps>({
   todos: [],
+  completed: {},
   setTodos: () => {},
-  deleteTodo: () => {}
+  setCompletedState: () => {}, 
+  deleteTodo: () => {},
+  setCompleteValue: () => {}
 });
 
 export interface ContextProps {
+  //states
   todos: Todo[] | null
+  completed: {[id: number]: boolean}; //todo.id
+  //dispatchers
   setTodos: Dispatch<SetStateAction<Todo[] | null>>
+  setCompletedState: Dispatch<SetStateAction<{[id: number]: boolean}>>
+  //functions
   deleteTodo: (id: number) => void
+  setCompleteValue: (id: number) => void
 }
 
 
 
 export default function TodoContext({ children }: { children: ReactElement }) {
   const [todos, setTodos] = useState<Todo[] | null>(null)
+  const [completed, setCompletedState] = useState<{[id: string]: boolean}>({});
 
   function getTodos() {
     fetch('https://jsonplaceholder.typicode.com/posts')
@@ -35,12 +45,16 @@ export default function TodoContext({ children }: { children: ReactElement }) {
     }
   };
 
+  function setCompleteValue(id: number){
+    setCompletedState({... completed, [id]: completed[id] ? false : true})
+  }
+
   useEffect(() => {
     getTodos()
   }, [])
 
   return (
-    <todoContext.Provider value={{ todos, setTodos, deleteTodo }}>
+    <todoContext.Provider value={{ todos, setTodos, deleteTodo, completed, setCompletedState, setCompleteValue }}>
       {children}
     </todoContext.Provider>
   );

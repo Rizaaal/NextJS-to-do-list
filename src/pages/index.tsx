@@ -21,7 +21,10 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <h1>to do list</h1>
-        {todos?.map(todo => <li key={todo.id}><Todo title={todo.title} body={todo.body}/></li>)}
+        {todos?.map(todo => 
+          <li key={todo.id}>
+            <Todo title={todo.title} body={todo.body} id={todo.id}/>
+          </li>)}
       </main>
     </>
   );

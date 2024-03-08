@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { useContext } from "react";
 import { todoContext } from "@/ContextProvider";
+import Todo from "@/components/Todo";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <h1>to do list</h1>
-        {todos?.map(todo => <li key={todo.id}>{todo.title}</li>)}
+        {todos?.map(todo => <li key={todo.id}><Todo title={todo.title} body={todo.body}/></li>)}
       </main>
     </>
   );

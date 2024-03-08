@@ -1,6 +1,9 @@
 import { Dispatch, ReactElement, SetStateAction, createContext, useEffect, useState } from "react";
 
-export const todoContext = createContext<ContextProps | null>(null);
+export const todoContext = createContext<ContextProps>({
+  todos: [],
+  setTodos: () => {}
+});
 
 export interface ContextProps {
   todos: Todo[] | null
